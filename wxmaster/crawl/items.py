@@ -6,6 +6,12 @@
 # http://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
+import json
+
+
+class WxMpItem(dict):
+    def __str__(self):
+        return json.dumps(self, ensure_ascii=False, sort_keys=True)
 
 
 class WxSpiderItem(scrapy.Item):
