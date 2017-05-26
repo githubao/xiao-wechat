@@ -1,5 +1,6 @@
 .idea/
-
+wxmaster/log
+wxmaster/file
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -15,6 +15,9 @@ import sys
 def wxapplet_spider():
     cmdline.execute('scrapy crawl wxapplet_spider'.split())
 
+def wxmp_spider():
+    cmdline.execute('scrapy crawl wxmp_spider'.split())
+
 
 def run():
     arg = int(sys.argv[1])
@@ -23,6 +26,7 @@ def run():
 
 spider_dic = {
     1: wxapplet_spider,
+    2: wxmp_spider,
 }
 
 
