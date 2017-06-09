@@ -38,17 +38,17 @@ class Kansha(scrapy.Spider):
             cate = item.xpath('.//span//text()')[0].extract().strip()
 
             url = url.replace('/welcome', '')
-            yield FormRequest(url_fmt.format(url, 1, get_time()), meta={'url': url, 'current_pg': 0, 'cate': cate},
-                              callback=self.parse_cate)
 
-            # print(len(classes))
-            # break
+            for i in range(1, 1001):
+                yield FormRequest(url_fmt.format(url, i, get_time()), meta={'cate': cate},
+                                  callback=self.parse_cate)
+
+                # print(len(classes))
+                # break
 
     def parse_cate(self, response):
         json_data = json.loads(response.body.decode())
 
-        next_pg = response.meta['current_pg'] + 1
-        url = response.meta['url']
         cate = response.meta['cate']
 
         # if json_data['data'] and next_pg < 3:
@@ -59,9 +59,6 @@ class Kansha(scrapy.Spider):
             with open(out_file, 'a', encoding='utf-8') as fw:
                 json.dump(json_data, fw, ensure_ascii=False, sort_keys=True)
                 fw.write('\n')
-
-            yield FormRequest(url_fmt.format(url, next_pg, get_time()), meta={'url': url, 'current_pg': next_pg,'cate':cate},
-                              callback=self.parse_cate)
 
 
 url_fmt = 'http://www.jintiankansha.me/api/topics{}?page={}&time={}'
