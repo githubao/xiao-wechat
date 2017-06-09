@@ -15,8 +15,13 @@ import sys
 def wxapplet_spider():
     cmdline.execute('scrapy crawl wxapplet_spider'.split())
 
+
 def wxmp_spider():
     cmdline.execute('scrapy crawl wxmp_spider'.split())
+
+
+def kansha_spider():
+    cmdline.execute('scrapy crawl kansha_spider'.split())
 
 
 def run():
@@ -27,6 +32,7 @@ def run():
 spider_dic = {
     1: wxapplet_spider,
     2: wxmp_spider,
+    3: kansha_spider,
 }
 
 
