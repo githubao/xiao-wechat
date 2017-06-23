@@ -24,6 +24,10 @@ def kansha_spider():
     cmdline.execute('scrapy crawl kansha_spider'.split())
 
 
+def mpanyv_spider():
+    cmdline.execute('scrapy crawl mpanyv_spider'.split())
+
+
 def run():
     arg = int(sys.argv[1])
     spider_dic[arg]()
@@ -33,6 +37,7 @@ spider_dic = {
     1: wxapplet_spider,
     2: wxmp_spider,
     3: kansha_spider,
+    4: mpanyv_spider,
 }
 
 

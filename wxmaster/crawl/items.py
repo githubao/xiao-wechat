@@ -18,3 +18,9 @@ class WxSpiderItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+class MpAnyvItem(dict):
+    def __str__(self):
+        return json.dumps(self, ensure_ascii=False, sort_keys=True)
+
+
