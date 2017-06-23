@@ -38,7 +38,8 @@ class MpAnyvSpider(scrapy.Spider):
         try:
             mp['name'] = response.selector.xpath('//h1/text()')[0].extract().strip()
             cate = response.selector.xpath('//div[@class="content_top"]//a//text()')
-            mp['cate'] = cate[1].extract().strip().replace('微信公众号','')
+            if len(cate) > 2:
+                mp['cate'] = cate[1].extract().strip().replace('微信公众号','')
 
             p_lst = response.selector.xpath('//div[contains(@class,"span_3_of_2")]//p//text()')
             for item in p_lst:
@@ -47,7 +48,6 @@ class MpAnyvSpider(scrapy.Spider):
                     mp['uid'] = content[content.find('微信号') + 3:].strip().strip(':：')
                 if '发布时间：' in content:
                     mp['created_at'] = content[content.find('发布时间') + 4:].strip().strip(':：')
-
 
 
             p_lst2 = response.selector.xpath('//div[@id="article"]/p/text()')

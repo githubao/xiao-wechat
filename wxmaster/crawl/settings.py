@@ -19,3 +19,7 @@ DOWNLOADER_MIDDLEWARES = {
     'wxmaster.crawl.middlewares.useragent.UserAgentMiddleware': 501,
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware.': None,
 }
+
+# 使用延迟
+DOWNLOAD_DELAY = 2
+RANDOM_DOWNLOAD_DELAY = True
