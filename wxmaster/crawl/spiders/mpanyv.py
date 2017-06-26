@@ -14,6 +14,7 @@ from wxmaster.crawl.items import MpAnyvItem
 from wxmaster.pth import FILE_PATH
 import traceback
 
+input_file = '{}/all_mp_ids.txt'.format(FILE_PATH)
 out_file = '{}/all_mp.json'.format(FILE_PATH)
 
 
@@ -26,8 +27,12 @@ class MpAnyvSpider(scrapy.Spider):
         return [Request(self.root_url, callback=self.parse_cate)]
 
     def parse_cate(self, response):
-        for i in range(1,72574):
-        # for i in range(1, 4):
+        ids = load_ids()
+
+        for i in range(1, 72574):
+            if i in ids:
+                continue
+
             yield Request('{}/viewnews-{}'.format(self.root_url, i), callback=self.parse_item, meta={'id': i})
 
     def parse_item(self, response):
@@ -39,7 +44,7 @@ class MpAnyvSpider(scrapy.Spider):
             mp['name'] = response.selector.xpath('//h1/text()')[0].extract().strip()
             cate = response.selector.xpath('//div[@class="content_top"]//a//text()')
             if len(cate) > 2:
-                mp['cate'] = cate[1].extract().strip().replace('微信公众号','')
+                mp['cate'] = cate[1].extract().strip().replace('微信公众号', '')
 
             p_lst = response.selector.xpath('//div[contains(@class,"span_3_of_2")]//p//text()')
             for item in p_lst:
@@ -48,7 +53,6 @@ class MpAnyvSpider(scrapy.Spider):
                     mp['uid'] = content[content.find('微信号') + 3:].strip().strip(':：')
                 if '发布时间：' in content:
                     mp['created_at'] = content[content.find('发布时间') + 4:].strip().strip(':：')
-
 
             p_lst2 = response.selector.xpath('//div[@id="article"]/p/text()')
             desc = ''.join([item.extract().strip() for item in p_lst2])
@@ -68,6 +72,11 @@ class MpAnyvSpider(scrapy.Spider):
 
         with open(out_file, 'a', encoding='utf-8') as fw:
             fw.write('{}\n'.format(mp))
+
+
+def load_ids():
+    with open(input_file, 'r', encoding='utf-8') as f:
+        return [int(line.strip()) for line in f]
 
 
 def main():
