@@ -13,8 +13,8 @@ from scrapy import Request
 from wxmaster.crawl.items import MpAnyvItem
 from wxmaster.pth import FILE_PATH
 import traceback
+import json
 
-input_file = '{}/all_mp_ids.txt'.format(FILE_PATH)
 out_file = '{}/all_mp.json'.format(FILE_PATH)
 
 
@@ -75,8 +75,14 @@ class MpAnyvSpider(scrapy.Spider):
 
 
 def load_ids():
-    with open(input_file, 'r', encoding='utf-8') as f:
-        return [int(line.strip()) for line in f]
+    res_list = []
+    with open(out_file, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+
+            json_data = json.loads(line)
+
+            res_list.append(json_data['id'])
 
 
 def main():
