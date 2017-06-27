@@ -79,11 +79,10 @@ def load_ids():
     with open(out_file, 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
-
             json_data = json.loads(line)
-
             res_list.append(json_data['id'])
 
+    return res_list
 
 def main():
     print('do sth')
