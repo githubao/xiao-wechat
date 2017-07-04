@@ -28,8 +28,8 @@ class WeRankSpider(scrapy.Spider):
         return [Request(self.root_url, callback=self.parse_cate)]
 
     def parse_cate(self, response):
-        # for i in range(1, 927):
-        for i in range(926, 927):
+        for i in range(1, 927):
+        # for i in range(926, 927):
             yield Request('{}/re{}'.format(self.root_url, i), callback=self.parse_item, meta={'id': i})
 
     def parse_item(self, response):
