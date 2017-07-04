@@ -29,7 +29,7 @@ class WeRankSpider(scrapy.Spider):
 
     def parse_cate(self, response):
         for i in range(1, 927):
-        # for i in range(926, 927):
+        # for i in range(892, 893):
             yield Request('{}/re{}'.format(self.root_url, i), callback=self.parse_item, meta={'id': i})
 
     def parse_item(self, response):
@@ -50,17 +50,20 @@ class WeRankSpider(scrapy.Spider):
             for tr in next_div_trs:
                 werank = WeRankItem()
 
-                tds = tr.xpath('./td')
-                werank['url'] = response.url
-                werank['account'] = tds[0].xpath('./a/text()')[0].extract().strip()
-                werank['account_url'] = tds[0].xpath('./a/@href')[0].extract().strip()
-                werank['article'] = tds[1].xpath('./a/text()')[0].extract().strip()
-                werank['article_url'] = tds[1].xpath('./a/@href')[0].extract().strip()
+                try:
+                    tds = tr.xpath('./td')
+                    werank['url'] = response.url
+                    werank['account'] = tds[0].xpath('./a/text()')[0].extract().strip()
+                    werank['account_url'] = tds[0].xpath('./a/@href')[0].extract().strip()
+                    werank['article'] = tds[1].xpath('./a/text()')[0].extract().strip()
+                    werank['article_url'] = tds[1].xpath('./a/@href')[0].extract().strip()
 
-                werank['read_cnt'] = int(tds[3].xpath('.//text()')[0].extract().strip().replace('10万+', '100000'))
-                werank['vote_cnt'] = int(tds[4].xpath('.//text()')[0].extract().strip())
-                werank['cate'] = cate
-                werank['id'] = uid
+                    werank['read_cnt'] = int(tds[3].xpath('.//text()')[0].extract().strip().replace('10万+', '100000'))
+                    werank['vote_cnt'] = int(tds[4].xpath('.//text()')[0].extract().strip())
+                    werank['cate'] = cate
+                    werank['id'] = uid
+                except Exception as e:
+                    print(tr)
 
                 uid += 1
                 werank_lst.append(werank)
