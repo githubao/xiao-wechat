@@ -13,7 +13,7 @@ from wxmaster.pth import FILE_PATH
 from collections import defaultdict
 
 input_file = '{}/werank.json'.format(FILE_PATH)
-out_file = '{}/werank_mp_result.txt'.format(FILE_PATH)
+out_file = '{}/werank_sort.txt'.format(FILE_PATH)
 
 
 def process():
