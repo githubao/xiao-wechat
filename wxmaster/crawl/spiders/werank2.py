@@ -39,7 +39,7 @@ class WeRank2Spider(scrapy.Spider):
 
                 yield Request(url, callback=self.parse_item, meta={'name': name, 'cate': cate, 'score': score})
 
-                break
+                # break
 
     def parse_item(self, response):
         werank = WeRankItem()
