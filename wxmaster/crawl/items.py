@@ -9,6 +9,11 @@ import scrapy
 import json
 
 
+class WeRankItem(dict):
+    def __str__(self):
+        return json.dumps(self, ensure_ascii=False, sort_keys=True)
+
+
 class WxMpItem(dict):
     def __str__(self):
         return json.dumps(self, ensure_ascii=False, sort_keys=True)
@@ -19,8 +24,7 @@ class WxSpiderItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
+
 class MpAnyvItem(dict):
     def __str__(self):
         return json.dumps(self, ensure_ascii=False, sort_keys=True)
-
-
