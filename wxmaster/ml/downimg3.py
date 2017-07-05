@@ -38,7 +38,7 @@ def get_flag(url):
         traceback.print_exc()
 
 
-MAX_WORKERS = 15
+MAX_WORKERS = 3
 
 
 def download_many(cc_list):
