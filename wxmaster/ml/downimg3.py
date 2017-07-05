@@ -18,8 +18,7 @@ input_file = '{}/werank_info.json'.format(FILE_PATH)
 
 import requests
 
-BASE_PATH = '/mnt/data/baoqiang/product/doutu/wxmp'
-# BASE_PATH = '/data/baoqiang/product/doutu/wxmp'
+BASE_PATH = '/data/baoqiang/product/doutu/wxmp'
 
 timeout = 10
 
