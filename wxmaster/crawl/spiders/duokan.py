@@ -39,8 +39,13 @@ class DuoKanSpider(CrawlSpider):
         duokan['cate'] = response.selector.xpath('//div[@class="u-nav-crumbs"]/a/text()')[-1].extract().strip()
         tags_xpath = '//section[@class="u-taglist"]//li//text()'
         duokan['tags'] = [item.extract().strip() for item in response.selector.xpath(tags_xpath)]
-        duokan['vote_cnt'] = int(response.selector.xpath('//span[@itemprop="reviewCount"]/text()')[0].extract().strip())
-        duokan['score'] = float(response.selector.xpath('//em[@itemprop="ratingValue"]/text()')[0].extract().strip())
+
+        vote_cnt_url = response.selector.xpath('//span[@itemprop="reviewCount"]/text()')
+        duokan['vote_cnt'] = int(vote_cnt_url[0].extract().strip()) if vote_cnt_url else 0
+
+        score_url = response.selector.xpath('//em[@itemprop="ratingValue"]/text()')
+        duokan['score'] = float(score_url[0].extract().strip()) if score_url else 0.0
+
         desc_xpath = '//article[@class="intro"]//text()'
         duokan['desc'] = '\n'.join(item.extract().strip() for item in response.selector.xpath(desc_xpath))
 
