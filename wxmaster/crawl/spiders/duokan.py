@@ -13,8 +13,10 @@ from scrapy.linkextractors import LinkExtractor
 from wxmaster.pth import FILE_PATH
 from wxmaster.crawl.items import DuoKanItem
 import sys
+import json
 
 out_file = '{}/duokan.json'.format(FILE_PATH)
+sort_file = '{}/duokan_sort.json'.format(FILE_PATH)
 
 
 class DuoKanSpider(CrawlSpider):
@@ -46,8 +48,21 @@ class DuoKanSpider(CrawlSpider):
             fw.write('{}\n'.format(duokan))
 
 
+# 根据评论的数量排序
+def rank_vote():
+    with open(out_file, 'r', encoding='utf-8') as f, \
+            open(sort_file, 'w', encoding='utf-8') as fw:
+        data_lst = [json.loads(line.strip()) for line in f]
+
+        data_lst.sort(key=lambda x: x['vote_cnt'], reverse=True)
+
+        for item in data_lst:
+            json.dump(item, fw, ensure_ascii=False, sort_keys=True)
+            fw.write('\n')
+
+
 def main():
-    print('do sth')
+    rank_vote()
 
 
 if __name__ == '__main__':
