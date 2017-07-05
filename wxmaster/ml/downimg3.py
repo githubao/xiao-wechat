@@ -20,8 +20,6 @@ import requests
 
 BASE_PATH = '/data/baoqiang/product/doutu/wxmp'
 
-timeout = 10
-
 
 def save_flag(img, filename):
     with open(filename, 'wb') as fw:
@@ -30,14 +28,14 @@ def save_flag(img, filename):
 
 def get_flag(url):
     try:
-        resp = requests.get(url, timeout=timeout)
+        resp = requests.get(url)
         return resp.content
     except Exception as e:
         print(url)
         traceback.print_exc()
 
 
-MAX_WORKERS = 3
+MAX_WORKERS = 10
 
 
 def download_many(cc_list):
