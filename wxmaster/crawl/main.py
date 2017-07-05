@@ -31,8 +31,13 @@ def mpanyv_spider():
 def werank_spider():
     cmdline.execute('scrapy crawl werank_spider'.split())
 
+
 def werank2_spider():
     cmdline.execute('scrapy crawl werank2_spider'.split())
+
+
+def duokan_spider():
+    cmdline.execute('scrapy crawl duokan_spider'.split())
 
 
 def run():
@@ -47,6 +52,7 @@ spider_dic = {
     4: mpanyv_spider,
     5: werank_spider,
     6: werank2_spider,
+    7: duokan_spider,
 }
 
 

@@ -9,6 +9,11 @@ import scrapy
 import json
 
 
+class DuoKanItem(dict):
+    def __str__(self):
+        return json.dumps(self, ensure_ascii=False, sort_keys=True)
+
+
 class WeRankItem(dict):
     def __str__(self):
         return json.dumps(self, ensure_ascii=False, sort_keys=True)
