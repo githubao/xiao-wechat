@@ -130,7 +130,8 @@ class SogouMpSpider(RedisSpider):
         #         # fw.write('{}\n'.format(mp))
         #         yield mp
 
-        start = response.meta['start']
+        # start = response.meta['start']
+        start = True if response.url.endswith('page=1') else False
         if start:
             num_url = response.selector.xpath('//div[@class="mun"]/text()')
             if num_url:
@@ -140,7 +141,7 @@ class SogouMpSpider(RedisSpider):
                     num_pg = int(total / 10) + 1 if total % 10 != 0 else int(total / 10)
 
                     for i in range(1, num_pg + 1):
-                        yield Request(search_fmt.format(response.meta['word'], i), callback=self.parse_item,
+                        yield Request('{}{}'.format(response.url[:-1],i), callback=self.parse_item,
                                       meta={'start': False, 'word': response.meta['word']})
 
 
@@ -201,9 +202,11 @@ def tmp1():
 
 
 def tmp():
-    s = 'b326815a'
-    print(type(upt_pat.search(s).group()))
+    # s = 'b326815a'
+    # print(type(upt_pat.search(s).group()))
 
+    s = '123'
+    print(s[:-1])
 
 def main():
     tmp()
