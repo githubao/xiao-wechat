@@ -156,9 +156,18 @@ def get_upt_time(src):
 
 
 def get_search_words():
+    res_list = []
     with open(input_file, 'r', encoding='utf-8') as f:
-        lines = (line.strip() for line in f)
-        return [search_fmt.format(line) for line in lines]
+        for line in f:
+            line = line.strip()
+
+            attr = line.split('\t')
+            if len(attr) != 2:
+                continue
+
+            res_list.append(search_fmt.format(attr[0]))
+
+    return res_list
 
 
 search_fmt = 'http://weixin.sogou.com/weixin?query={}&type=1&page=1'
