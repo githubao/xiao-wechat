@@ -86,6 +86,8 @@ class SogouMpSpider(RedisSpider):
         for item in classes:
             mp = WxMpItem()
             try:
+                mp['url'] = unquote(response.url)
+
                 mp['name'] = ''.join([i.extract().strip() for i in item.xpath('.//p[@class="tit"]//text()')])
                 mp['uid'] = item.xpath('.//p[@class="info"]/label/text()')[0].extract().strip()
 
@@ -115,11 +117,9 @@ class SogouMpSpider(RedisSpider):
                 mp['month_cnt'] = int(msg_dic.get(li_url, '0,0').split(',')[0])
                 mp['read_cnt'] = int(msg_dic.get(li_url, '0,0').split(',')[1])
 
-                mp['url'] = unquote(response.url)
-
             except Exception as e:
+                mp['month_cnt'] = mp['read_cnt'] = 0
                 traceback.print_exc()
-
 
             yield mp
             # mp_list.append(mp)
