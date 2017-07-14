@@ -27,3 +27,8 @@ USE_HTTPS_PROXIES = False
 # 使用延迟
 # DOWNLOAD_DELAY = 2
 # RANDOM_DOWNLOAD_DELAY = True
+
+SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
+DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'
+REDIS_URL = 'redis://:nlpturing2016@192.168.10.33:6381/15'
+SCHEDULER_PERSIST = False

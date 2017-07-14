@@ -37,17 +37,23 @@ time_fmt = "%Y-%m-%d %H:%M:%S"
 class SogouMpSpider(CrawlSpider):
     name = 'sogoump_spider'
 
-    rules = [
-        Rule(LinkExtractor(allow=('/weixin.*query.*',)), callback='parse_item', follow=True,
-             process_request='add_header')
-    ]
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'wxmaster.crawl.pipelines.SogouMpPipeline': 300,
+        }
+    }
+
+    # rules = [
+    #     Rule(LinkExtractor(allow=('/weixin.*query.*',)), callback='parse_item', follow=True,
+    #          process_request='add_header')
+    # ]
 
     def add_header(self, request):
         request.replace(headers=get_headers())
         return request
 
     def start_requests(self):
-        return [Request(root_url, callback=self.parse_list)]
+        return [Request(root_url, callback=self.parse_list,dont_filter=True)]
 
     def parse_list(self, response):
         urls = get_search_words()
@@ -110,7 +116,8 @@ class SogouMpSpider(CrawlSpider):
         # 保存数据
         with open(out_file, 'a', encoding='utf-8') as fw:
             for mp in mp_list:
-                fw.write('{}\n'.format(mp))
+                # fw.write('{}\n'.format(mp))
+                yield mp
 
 
 def get_month_url(url):
