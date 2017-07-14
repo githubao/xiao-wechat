@@ -43,10 +43,10 @@ class SogouMpSpider(CrawlSpider):
         }
     }
 
-    # rules = [
-    #     Rule(LinkExtractor(allow=('/weixin.*query.*',)), callback='parse_item', follow=True,
-    #          process_request='add_header')
-    # ]
+    rules = [
+        Rule(LinkExtractor(allow=('/weixin.*query.*',)), callback='parse_item', follow=True,
+             process_request='add_header')
+    ]
 
     def add_header(self, request):
         request.replace(headers=get_headers())
