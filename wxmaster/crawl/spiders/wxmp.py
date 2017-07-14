@@ -18,6 +18,7 @@ import requests
 from scrapy import Request
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule, CrawlSpider
+from scrapy_redis.spiders import RedisSpider
 
 from wxmaster.crawl.items import WxMpItem
 from wxmaster.pth import FILE_PATH
@@ -34,7 +35,7 @@ time_fmt = "%Y-%m-%d %H:%M:%S"
 
 # time_fmt = "%Y-%m-%d"
 
-class SogouMpSpider(CrawlSpider):
+class SogouMpSpider(RedisSpider):
     name = 'sogoump_spider'
 
     custom_settings = {
@@ -43,23 +44,29 @@ class SogouMpSpider(CrawlSpider):
         }
     }
 
-    rules = [
-        Rule(LinkExtractor(allow=('/weixin.*query.*',)), callback='parse_item', follow=True,
-             process_request='add_header')
-    ]
+    # rules = [
+    #     Rule(LinkExtractor(allow=('/weixin.*query.*',)), callback='parse_item', follow=True,
+    #          process_request='add_header')
+    # ]
 
     def add_header(self, request):
         request.replace(headers=get_headers())
         return request
 
     def start_requests(self):
-        return [Request(root_url, callback=self.parse_list,dont_filter=True)]
+        return [Request(root_url, callback=self.parse_list, dont_filter=True)]
 
     def parse_list(self, response):
-        urls = get_search_words()
+        with open(input_file, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
 
-        for url in urls:
-            yield Request(url, callback=self.parse_item)
+                attr = line.split('\t')
+                if len(attr) != 2:
+                    continue
+
+                yield Request(search_fmt.format(attr[0], 1), callback=self.parse_item,
+                              meta={'start': True, 'word': attr[0]})
 
     def parse_item(self, response):
         month_url = get_month_url(response.body.decode())
@@ -119,6 +126,19 @@ class SogouMpSpider(CrawlSpider):
                 # fw.write('{}\n'.format(mp))
                 yield mp
 
+        start = response.meta['start']
+        if start:
+            num_url = response.xpath.selector('//div[@class="mun"]/text()')
+            if num_url:
+                m = num_pat.search(num_url[0].extract.xpath())
+                if m:
+                    total = int(m.group())
+                    num_pg = int(total / 10) + 1 if total % 10 != 0 else int(total / 10)
+
+                    for i in range(1, num_pg + 1):
+                        yield Request(search_fmt.format(response.meta['word'], i), callback=self.parse_item,
+                                      meta={'start': False, 'word': response.meta['word']})
+
 
 def get_month_url(url):
     m = month_pat.search(url)
@@ -156,28 +176,13 @@ def trim_time(time):
 def get_upt_time(src):
     m = upt_pat.search(src)
     if m:
-        upt_time = time.localtime(int(m.group(1)))
+        upt_time = time.localtime(int(m.group()))
         return time.strftime(time_fmt, upt_time)
     else:
         return ''
 
 
-def get_search_words():
-    res_list = []
-    with open(input_file, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-
-            attr = line.split('\t')
-            if len(attr) != 2:
-                continue
-
-            res_list.append(search_fmt.format(attr[0]))
-
-    return res_list
-
-
-search_fmt = 'http://weixin.sogou.com/weixin?query={}&type=1&page=1'
+search_fmt = 'http://weixin.sogou.com/weixin?query={}&type=1&page={}'
 
 headers = {
     'Cookie': 'pgv_pvi=1520665600; RK=hf0PpTkeaa; pac_uid=1_779439458; pt2gguin=o0779439458; ptcz=da82dcae41f1c11792f5602d8a39d0447963e6124b8c380525c6e567ebd8ff03; noticeLoginFlag=1; remember_acct=xiaoege01%40gmail.com; pgv_pvid=3203998305; o_cookie=779439458; dm_login_weixin_scan='
