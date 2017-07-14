@@ -37,15 +37,6 @@ time_fmt = "%Y-%m-%d %H:%M:%S"
 class SogouMpSpider(CrawlSpider):
     name = 'sogoump_spider'
 
-    def start_requests(self):
-        return [Request(root_url, callback=self.parse_list)]
-
-    def parse_list(self,response):
-        urls = get_search_words()
-
-        for url in urls:
-            yield Request(url, callback=self.parse_item)
-
     rules = [
         Rule(LinkExtractor(allow=('/weixin.*query.*',)), callback='parse_item', follow=True,
              process_request='add_header')
@@ -54,6 +45,15 @@ class SogouMpSpider(CrawlSpider):
     def add_header(self, request):
         request.replace(headers=get_headers())
         return request
+
+    def start_requests(self):
+        return [Request(root_url, callback=self.parse_list)]
+
+    def parse_list(self, response):
+        urls = get_search_words()
+
+        for url in urls:
+            yield Request(url, callback=self.parse_item)
 
     def parse_item(self, response):
         month_url = get_month_url(response.body.decode())
