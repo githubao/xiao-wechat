@@ -19,6 +19,7 @@ from scrapy import Request
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule, CrawlSpider
 from scrapy_redis.spiders import RedisSpider
+import scrapy
 
 from wxmaster.crawl.items import WxMpItem
 from wxmaster.pth import FILE_PATH
@@ -36,6 +37,7 @@ time_fmt = "%Y-%m-%d %H:%M:%S"
 # time_fmt = "%Y-%m-%d"
 
 class SogouMpSpider(RedisSpider):
+# class SogouMpSpider(scrapy.Spider):
     name = 'sogoump_spider'
 
     custom_settings = {
@@ -118,19 +120,21 @@ class SogouMpSpider(RedisSpider):
             except Exception as e:
                 traceback.print_exc()
 
-            mp_list.append(mp)
+
+            yield mp
+            # mp_list.append(mp)
 
         # 保存数据
-        with open(out_file, 'a', encoding='utf-8') as fw:
-            for mp in mp_list:
-                # fw.write('{}\n'.format(mp))
-                yield mp
+        # with open(out_file, 'a', encoding='utf-8') as fw:
+        #     for mp in mp_list:
+        #         # fw.write('{}\n'.format(mp))
+        #         yield mp
 
         start = response.meta['start']
         if start:
             num_url = response.selector.xpath('//div[@class="mun"]/text()')
             if num_url:
-                m = num_pat.search(num_url[0].extract.xpath())
+                m = num_pat.search(num_url[0].extract().strip())
                 if m:
                     total = int(m.group())
                     num_pg = int(total / 10) + 1 if total % 10 != 0 else int(total / 10)
