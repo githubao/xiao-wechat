@@ -16,8 +16,8 @@ def wxapplet_spider():
     cmdline.execute('scrapy crawl wxapplet_spider'.split())
 
 
-def wxmp_spider():
-    cmdline.execute('scrapy crawl wxmp_spider'.split())
+def sogoump_spider():
+    cmdline.execute('scrapy crawl sogoump_spider'.split())
 
 
 def kansha_spider():
@@ -50,7 +50,7 @@ def run():
 
 spider_dic = {
     1: wxapplet_spider,
-    2: wxmp_spider,
+    2: sogoump_spider,
     3: kansha_spider,
     4: mpanyv_spider,
     5: werank_spider,
