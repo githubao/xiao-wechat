@@ -40,7 +40,7 @@ class SogouMpSpider(CrawlSpider):
     def start_requests(self):
         return [Request(root_url, callback=self.parse_list)]
 
-    def parse_list(self):
+    def parse_list(self,response):
         urls = get_search_words()
 
         for url in urls:
