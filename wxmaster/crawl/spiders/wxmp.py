@@ -128,7 +128,7 @@ class SogouMpSpider(RedisSpider):
 
         start = response.meta['start']
         if start:
-            num_url = response.xpath.selector('//div[@class="mun"]/text()')
+            num_url = response.selector.xpath('//div[@class="mun"]/text()')
             if num_url:
                 m = num_pat.search(num_url[0].extract.xpath())
                 if m:
