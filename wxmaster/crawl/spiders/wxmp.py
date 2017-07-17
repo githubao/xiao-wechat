@@ -25,6 +25,7 @@ from wxmaster.crawl.items import WxMpItem
 from wxmaster.pth import FILE_PATH
 
 num_pat = re.compile('[\d]+')
+nohanzi_pat = re.compile('[^\u4e00-\u9fff]')
 
 input_file = '{}/words.txt'.format(FILE_PATH)
 out_file = '{}/sogoump.json'.format(FILE_PATH)
@@ -37,7 +38,7 @@ time_fmt = "%Y-%m-%d %H:%M:%S"
 # time_fmt = "%Y-%m-%d"
 
 class SogouMpSpider(RedisSpider):
-# class SogouMpSpider(scrapy.Spider):
+    # class SogouMpSpider(scrapy.Spider):
     name = 'sogoump_spider'
 
     custom_settings = {
@@ -65,6 +66,10 @@ class SogouMpSpider(RedisSpider):
 
                 attr = line.split('\t')
                 if len(attr) != 2:
+                    continue
+
+                m = nohanzi_pat.search(attr[0])
+                if m:
                     continue
 
                 yield Request(search_fmt.format(attr[0], 1), callback=self.parse_item,
@@ -141,7 +146,7 @@ class SogouMpSpider(RedisSpider):
                     num_pg = int(total / 10) + 1 if total % 10 != 0 else int(total / 10)
 
                     for i in range(1, num_pg + 1):
-                        yield Request('{}{}'.format(response.url[:-1],i), callback=self.parse_item,
+                        yield Request('{}{}'.format(response.url[:-1], i), callback=self.parse_item,
                                       meta={'start': False, 'word': response.meta['word']})
 
 
@@ -207,6 +212,7 @@ def tmp():
 
     s = '123'
     print(s[:-1])
+
 
 def main():
     tmp()

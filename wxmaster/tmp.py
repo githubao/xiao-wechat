@@ -11,8 +11,10 @@
 import requests
 import json
 
-
 def tmp():
+    url = ''
+
+def tmp2():
     root_path = 'C:\\Users\\BaoQiang\\Desktop\\'
     with open('{}/1.json'.format(root_path), 'r', encoding='utf-8') as f, \
             open('{}/1.txt'.format(root_path), 'w', encoding='utf-8') as fw:
