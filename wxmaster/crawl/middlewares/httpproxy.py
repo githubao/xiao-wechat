@@ -85,6 +85,26 @@ def get_proxy(https=False):
     proxy_str = requests.get('http://192.168.10.195:5000/get_all/').content.decode()
     return json.loads(proxy_str)
 
+class HttpProxyWallMiddleware():
+    def __init__(self, proxies):
+        self.proxies = defaultdict(lambda: [])
+
+        for proxy in proxies:
+            self.proxies['http'].append('http://{}'.format(proxy))
+            self.proxies['https'].append('http://{}'.format(proxy))
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        # return cls(crawler.settings.get('RANDOM_PROXIES'))
+        return cls(['127.0.0.1:8123'])
+
+    def process_request(self, request, spider):
+        scheme = urlparse(request.url).scheme
+        if self.proxies[scheme]:
+            proxy = random.choice(self.proxies[scheme])
+            logging.info('request {} using proxy: {}'.format(request.url, proxy))
+            request.meta['proxy'] = proxy
+
 def main():
     pass
 

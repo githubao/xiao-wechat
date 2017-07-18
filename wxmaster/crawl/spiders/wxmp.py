@@ -37,8 +37,8 @@ time_fmt = "%Y-%m-%d %H:%M:%S"
 
 # time_fmt = "%Y-%m-%d"
 
-class SogouMpSpider(RedisSpider):
-    # class SogouMpSpider(scrapy.Spider):
+# class SogouMpSpider(RedisSpider):
+class SogouMpSpider(scrapy.Spider):
     name = 'sogoump_spider'
 
     custom_settings = {
