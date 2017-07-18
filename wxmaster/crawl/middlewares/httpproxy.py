@@ -24,7 +24,8 @@ import requests
 import json
 from wxmaster.pth import logging
 
-max_time = 600
+# max_time = 600
+max_time = 3000
 
 
 class HttpProxyMiddleware():

@@ -17,8 +17,8 @@ USER_AGENT_POOL = [
 ]
 DOWNLOADER_MIDDLEWARES = {
     'wxmaster.crawl.middlewares.useragent.UserAgentMiddleware': 501,
-    # 'wxmaster.crawl.middlewares.httpproxy.HttpProxyMiddleware': 502,
-    'wxmaster.crawl.middlewares.httpproxy.HttpProxyWallMiddleware': 502,
+    'wxmaster.crawl.middlewares.httpproxy.HttpProxyMiddleware': 502,
+    # 'wxmaster.crawl.middlewares.httpproxy.HttpProxyWallMiddleware': 502,
 
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware.': None,
 }
@@ -26,10 +26,10 @@ DOWNLOADER_MIDDLEWARES = {
 USE_HTTPS_PROXIES = False
 
 # 使用延迟
-# DOWNLOAD_DELAY = 2
-# RANDOM_DOWNLOAD_DELAY = True
+DOWNLOAD_DELAY = 2
+RANDOM_DOWNLOAD_DELAY = True
 
-# SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
-# DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'
-# REDIS_URL = 'redis://:nlpturing2016@192.168.10.33:6381/15'
-# SCHEDULER_PERSIST = False
+SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
+DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'
+REDIS_URL = 'redis://:nlpturing2016@192.168.10.33:6381/15'
+SCHEDULER_PERSIST = False
