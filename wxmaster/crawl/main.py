@@ -42,6 +42,9 @@ def duokan_spider():
 def sohump_spider():
     cmdline.execute('scrapy crawl sohump_spider'.split())
 
+def gudong_spider():
+    cmdline.execute('scrapy crawl gudong_spider'.split())
+
 
 def run():
     arg = int(sys.argv[1])
@@ -57,6 +60,7 @@ spider_dic = {
     6: werank2_spider,
     7: duokan_spider,
     8: sohump_spider,
+    9: gudong_spider,
 }
 
 

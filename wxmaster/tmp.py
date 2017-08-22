@@ -10,9 +10,68 @@
 
 import requests
 import json
+import requests
+
+from operator import neg
+import os
 
 def tmp():
+    print()
+
+def tmp6():
     url = ''
+    data = {
+        'user': 6289197,
+    }
+
+    print(requests.get(url, params=data).content.decode())
+
+
+class A:
+    def __init__(self, a):
+        self.a = a
+
+    @property
+    def a(self):
+        return self.a
+
+    @a.setter
+    def a(self, a):
+        self.a = a
+
+
+def tmp5():
+    a = 0
+    if a:
+        print(a)
+
+    a = None
+    if a is None:
+        print('is')
+
+    if a == None:
+        print('==')
+
+
+def tmp4():
+    s = [1, 2, 3]
+    print(list(map(neg, s)))
+
+    print(all([]))
+    print(any([]))
+
+
+def tmp3():
+    url = 'http://weixin.sogou.com/weixin?query=%E5%8F%91%E7%8E%B0&type=1&page=1'
+
+    proxies = {
+        # 'http':'http://147.75.208.74:10200'
+        'http': 'http://107.21.56.41:3128'
+    }
+
+    response = requests.get(url, proxies=proxies)
+    print(response.content.decode())
+
 
 def tmp2():
     root_path = 'C:\\Users\\BaoQiang\\Desktop\\'
