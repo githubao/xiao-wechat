@@ -16,11 +16,11 @@ USER_AGENT_POOL = [
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36',
 ]
 DOWNLOADER_MIDDLEWARES = {
-    'wxmaster.crawl.middlewares.useragent.UserAgentMiddleware': 501,
+    # 'wxmaster.crawl.middlewares.useragent.UserAgentMiddleware': 501,
     # 'wxmaster.crawl.middlewares.httpproxy.HttpProxyMiddleware': 502,
     # 'wxmaster.crawl.middlewares.httpproxy.HttpProxyWallMiddleware': 502,
 
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware.': None,
+    # 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
 }
 
 USE_HTTPS_PROXIES = False

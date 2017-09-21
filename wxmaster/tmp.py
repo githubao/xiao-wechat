@@ -14,9 +14,35 @@ import requests
 
 from operator import neg
 import os
+import json
+
 
 def tmp():
-    print()
+    # followCount
+    url = 'https://shop.m.jd.com/?shopId=1000000127'
+    response = requests.get(url)
+    content = response.content.decode()
+    print(content)
+
+
+def tmp8():
+    data = {
+        'key': 123,
+        'value': '{"id":1,"value":"aaa"}'
+    }
+
+    response = requests.post('http://192.168.10.24:8765/redis', json=data)
+    print(response.content.decode())
+
+    response = requests.get('http://192.168.10.24:8765/redis?key=123')
+    print(response.json())
+
+
+def tmp7():
+    s = 'I　am　improving，　but　gradually。a b　c'
+    lst = list(i for i in s)
+    print(lst)
+
 
 def tmp6():
     url = ''

@@ -39,11 +39,20 @@ def werank2_spider():
 def duokan_spider():
     cmdline.execute('scrapy crawl duokan_spider'.split())
 
+
 def sohump_spider():
     cmdline.execute('scrapy crawl sohump_spider'.split())
 
+
 def gudong_spider():
     cmdline.execute('scrapy crawl gudong_spider'.split())
+
+
+def jdshop_spider():
+    cmdline.execute('scrapy crawl jdshop_spider'.split())
+
+def mayi_spider():
+    cmdline.execute('scrapy crawl mayi_spider'.split())
 
 
 def run():
@@ -61,6 +70,8 @@ spider_dic = {
     7: duokan_spider,
     8: sohump_spider,
     9: gudong_spider,
+    10: jdshop_spider,
+    11: mayi_spider,
 }
 
 
