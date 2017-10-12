@@ -51,8 +51,16 @@ def gudong_spider():
 def jdshop_spider():
     cmdline.execute('scrapy crawl jdshop_spider'.split())
 
+
 def mayi_spider():
     cmdline.execute('scrapy crawl mayi_spider'.split())
+
+
+def iranshao_spider():
+    cmdline.execute('scrapy crawl iranshao_spider'.split())
+
+def appstore_spider():
+    cmdline.execute('scrapy crawl appstore_spider'.split())
 
 
 def run():
@@ -72,6 +80,8 @@ spider_dic = {
     9: gudong_spider,
     10: jdshop_spider,
     11: mayi_spider,
+    12: iranshao_spider,
+    13: appstore_spider,
 }
 
 

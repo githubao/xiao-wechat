@@ -8,16 +8,38 @@
 @time: 2017/7/12 11:20
 """
 
-import requests
 import json
-import requests
-
 from operator import neg
-import os
-import json
+
+import requests
+from scrapy.selector import Selector
 
 
 def tmp():
+    test_xpath()
+
+
+def test_xpath():
+    html = open("C:\\Users\\BaoQiang\\Desktop\\1.html", 'r', encoding='utf-8').read()
+    root = Selector(text=html)
+
+    p_list = root.xpath('//div[@class="article-content"]/div/p')
+    for item in p_list:
+        text = ''.join(i.extract().strip() for i in item.xpath('.//text()'))
+        if '（TOP前五）' not in text:
+            continue
+
+        print('####', text.replace('（TOP前五）',''))
+
+        li_url = item.xpath('./following-sibling::*[@class=" list-paddingleft-2"][1]/li//text()')
+        for item in li_url:
+            text = item.extract().strip()
+            print('-', text)
+
+        print('')
+
+
+def tmp9():
     # followCount
     url = 'https://shop.m.jd.com/?shopId=1000000127'
     response = requests.get(url)

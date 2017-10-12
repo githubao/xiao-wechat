@@ -2,8 +2,8 @@
 
 BOT_NAME = 'wx_spider'
 
-SPIDER_MODULES = ['wxmaster.crawl.spiders']
-NEWSPIDER_MODULE = 'wxmaster.crawl.spiders'
+SPIDER_MODULES = ['wxmaster.crawl.spiders','wxmaster.crawl.spiders2']
+NEWSPIDER_MODULE = 'wxmaster.crawl.spiders2'
 
 ROBOTSTXT_OBEY = False
 
