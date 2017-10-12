@@ -17,13 +17,13 @@ USER_AGENT_POOL = [
 ]
 DOWNLOADER_MIDDLEWARES = {
     # 'wxmaster.crawl.middlewares.useragent.UserAgentMiddleware': 501,
-    # 'wxmaster.crawl.middlewares.httpproxy.HttpProxyMiddleware': 502,
+    'wxmaster.crawl.middlewares.httpproxy.HttpProxyMiddleware': 502,
     # 'wxmaster.crawl.middlewares.httpproxy.HttpProxyWallMiddleware': 502,
 
     # 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
 }
 
-USE_HTTPS_PROXIES = False
+USE_HTTPS_PROXIES = True
 
 # 使用延迟
 # DOWNLOAD_DELAY = 2

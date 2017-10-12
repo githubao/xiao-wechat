@@ -59,7 +59,7 @@ class AppStoreSpider(CrawlSpider):
             app_dic['total_rating'] = int(rating_xpath[1].extract().strip().replace(' 份评分', ''))
 
             score_xpath = left_xpath.xpath('.//span[@itemprop="ratingValue"]//text()')
-            app_dic['current_score'] = int(score_xpath[0].extract().strip())
+            app_dic['current_score'] = float(score_xpath[0].extract().strip())
 
             app_dic['current_score'] = int()
 
