@@ -82,8 +82,9 @@ class HttpProxyMiddleware():
 
 def get_proxy(https=False):
     if https:
-        raise NotImplementedError()
-    proxy_str = requests.get('http://192.168.10.195:5000/get_all/').content.decode()
+        proxy_str = requests.get('http://192.168.10.195:5000/get_all_https/').content.decode()
+    else:
+        proxy_str = requests.get('http://192.168.10.195:5000/get_all/').content.decode()
     return json.loads(proxy_str)
 
 class HttpProxyWallMiddleware():
