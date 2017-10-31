@@ -62,6 +62,9 @@ def iranshao_spider():
 def appstore_spider():
     cmdline.execute('scrapy crawl appstore_spider'.split())
 
+def ziru_spider():
+    cmdline.execute('scrapy crawl ziru_spider'.split())
+
 
 def run():
     arg = int(sys.argv[1])
@@ -82,6 +85,7 @@ spider_dic = {
     11: mayi_spider,
     12: iranshao_spider,
     13: appstore_spider,
+    14: ziru_spider,
 }
 
 
